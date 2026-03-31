@@ -11,7 +11,7 @@ export default async function Home() {
       <AboutSection />
       <ExprianceSection />
       <CertificateSection />
-      {/* <ContactSection /> */}
+      <ContactSection />
     </>
   );
 }
