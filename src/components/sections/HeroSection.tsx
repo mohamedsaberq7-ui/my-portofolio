@@ -46,16 +46,16 @@ export default async function HeroScreen() {
       {/* Navigation */}
 
       {/* Hero Content */}
-      <main className="flex-1 flex items-center px-8 md:px-16 lg:px-24 z-10">
+      <main className="flex-1 flex items-center px-6 sm:px-8 md:px-16 lg:px-24 z-10 pt-28 pb-16 lg:py-0">
         <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column */}
-          <div className="flex flex-col max-w-lg">
+          <div className="flex flex-col max-w-lg order-2 lg:order-1">
             <p className="text-[#8eb19d] text-xs font-bold tracking-[0.2em] uppercase mb-6">
               {hero.jobTitle}
             </p>
 
-            <h1 className="text-6xl md:text-7xl font-serif text-[#333333] mb-8 leading-[1.1]">
-              {hero.firstName} <br />
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif text-[#333333] mb-6 sm:mb-8 leading-[1.1]">
+              {hero.firstName} <br className="hidden sm:block" />
               <span className="italic text-gray-600 font-light">
                 {hero.lastName}
               </span>
@@ -65,12 +65,12 @@ export default async function HeroScreen() {
               {hero.bio}
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto">
               <a
                 href={hero.cvUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-3 bg-[#fdfdfc] bg-opacity-80 backdrop-blur-sm border border-white shadow-[0_4px_15px_-4px_rgba(0,0,0,0.05)] hover:shadow-md transition-all px-6 py-3 rounded-full text-sm text-gray-700 font-medium"
+                className="flex items-center justify-center space-x-3 bg-[#fdfdfc] bg-opacity-80 backdrop-blur-sm border border-white shadow-[0_4px_15px_-4px_rgba(0,0,0,0.05)] hover:shadow-md transition-all px-6 py-3.5 sm:py-3 rounded-full text-sm text-gray-700 font-medium w-full sm:w-auto"
               >
                 <svg
                   className="w-4 h-4 text-gray-500"
@@ -92,7 +92,7 @@ export default async function HeroScreen() {
                 href={hero.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-3 bg-[#fdfdfc] bg-opacity-80 backdrop-blur-sm border border-white shadow-[0_4px_15px_-4px_rgba(0,0,0,0.05)] hover:shadow-md transition-all px-6 py-3 rounded-full text-sm text-gray-700 font-medium"
+                className="flex items-center justify-center space-x-3 bg-[#fdfdfc] bg-opacity-80 backdrop-blur-sm border border-white shadow-[0_4px_15px_-4px_rgba(0,0,0,0.05)] hover:shadow-md transition-all px-6 py-3.5 sm:py-3 rounded-full text-sm text-gray-700 font-medium w-full sm:w-auto"
               >
                 <svg
                   className="w-4 h-4 text-gray-600"
@@ -107,8 +107,8 @@ export default async function HeroScreen() {
           </div>
 
           {/* Right Column (Profile Image / Gradient Circle) */}
-          <div className="flex justify-center lg:justify-end relative mt-12 lg:mt-0">
-            <div className="w-[300px] h-[300px] md:w-[450px] md:h-[450px] rounded-full bg-gradient-to-br from-[#cce0cf] via-[#e2dec4] to-[#e4d9bc] flex items-center justify-center shadow-inner relative z-10 overflow-hidden">
+          <div className="flex justify-center lg:justify-end relative order-1 lg:order-2">
+            <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-[450px] md:h-[450px] rounded-full bg-gradient-to-br from-[#cce0cf] via-[#e2dec4] to-[#e4d9bc] flex items-center justify-center shadow-inner relative z-10 overflow-hidden">
               {hero.profileImage ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <Image

@@ -45,12 +45,12 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="bg-gradient-to-b from-[#f3f4f0] to-[#e8e4d8] py-24 px-8 flex flex-col items-center"
+      className="bg-gradient-to-b from-[#f3f4f0] to-[#e8e4d8] py-16 sm:py-24 px-6 sm:px-8 flex flex-col items-center"
     >
       <div className="w-full max-w-lg flex flex-col items-center">
-        <div className="flex items-center gap-4 mb-2">
-          <div className="w-8 h-[1px] bg-gray-400"></div>
-          <h2 className="text-3xl md:text-4xl font-serif text-[#4a4a4a]">
+        <div className="flex items-center gap-3 sm:gap-4 mb-2 w-full justify-center">
+          <div className="w-6 sm:w-8 h-[1px] bg-gray-400 shrink-0"></div>
+          <h2 className="text-3xl md:text-4xl font-serif text-[#4a4a4a] text-center">
             Get in Touch
           </h2>
         </div>

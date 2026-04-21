@@ -26,12 +26,12 @@ export default async function AboutSection() {
   return (
     <section
       id="about"
-      className="bg-[#fbfaf8] py-24 px-8 md:px-16 lg:px-32 flex justify-center"
+      className="bg-[#fbfaf8] py-16 sm:py-24 px-6 sm:px-8 md:px-16 lg:px-32 flex justify-center"
     >
       <div className="w-full max-w-5xl">
-        <div className="flex items-center gap-4 mb-10">
-          <div className="w-8 h-[1px] bg-gray-400"></div>
-          <h2 className="text-4xl md:text-5xl font-serif text-[#4a4a4a]">
+        <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-10">
+          <div className="w-6 sm:w-8 h-[1px] bg-gray-400"></div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#4a4a4a]">
             About Me
           </h2>
         </div>
