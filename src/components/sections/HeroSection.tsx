@@ -1,6 +1,8 @@
 import dbConnect from "@/lib/dbConnect";
 import Hero from "@/models/Hero";
 import type { HeroData } from "@/interface";
+import profileImage from "../../../public/images/IMG_20260413_143831.jpg";
+import Image from "next/image";
 
 const defaultHero: HeroData = {
   jobTitle: "Agricultural Engineer",
@@ -24,6 +26,16 @@ async function getHeroData(): Promise<HeroData> {
     console.error("Failed to fetch hero data:", error);
     return defaultHero;
   }
+}
+
+function getCorrectImageUrl(url: string) {
+  if (!url) return url;
+  const driveRegex = /drive\.google\.com\/file\/d\/([^/]+)\//;
+  const match = url.match(driveRegex);
+  if (match && match[1]) {
+    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+  }
+  return url;
 }
 
 export default async function HeroScreen() {
@@ -99,8 +111,8 @@ export default async function HeroScreen() {
             <div className="w-[300px] h-[300px] md:w-[450px] md:h-[450px] rounded-full bg-gradient-to-br from-[#cce0cf] via-[#e2dec4] to-[#e4d9bc] flex items-center justify-center shadow-inner relative z-10 overflow-hidden">
               {hero.profileImage ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={hero.profileImage}
+                <Image
+                  src={profileImage}
                   alt={`${hero.firstName} ${hero.lastName}`}
                   className="w-full h-full object-cover"
                 />

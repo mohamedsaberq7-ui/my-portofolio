@@ -2,7 +2,14 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import type { HeroData, AboutData, ExperienceData, CertificateData, ExperienceItem, CertificateItem } from "@/interface";
+import type {
+  HeroData,
+  AboutData,
+  ExperienceData,
+  CertificateData,
+  ExperienceItem,
+  CertificateItem,
+} from "@/interface";
 
 const defaultHero: HeroData = {
   jobTitle: "Agricultural Engineer",
@@ -78,8 +85,10 @@ const defaultCertificate: CertificateData = {
 export default function AdminPage() {
   const [heroData, setHeroData] = useState<HeroData>(defaultHero);
   const [aboutData, setAboutData] = useState<AboutData>(defaultAbout);
-  const [experienceData, setExperienceData] = useState<ExperienceData>(defaultExperience);
-  const [certificateData, setCertificateData] = useState<CertificateData>(defaultCertificate);
+  const [experienceData, setExperienceData] =
+    useState<ExperienceData>(defaultExperience);
+  const [certificateData, setCertificateData] =
+    useState<CertificateData>(defaultCertificate);
   const [isLoading, setIsLoading] = useState(true);
   const [isSavingHero, setIsSavingHero] = useState(false);
   const [isSavingAbout, setIsSavingAbout] = useState(false);
@@ -222,7 +231,7 @@ export default function AdminPage() {
   const handleExperienceChange = (
     index: number,
     field: keyof ExperienceItem,
-    value: string
+    value: string,
   ) => {
     setExperienceData((prev) => {
       const updated = [...prev.items];
@@ -277,7 +286,7 @@ export default function AdminPage() {
   const handleCertificateChange = (
     index: number,
     field: keyof CertificateItem,
-    value: string
+    value: string,
   ) => {
     setCertificateData((prev) => {
       const updated = [...prev.items];
@@ -439,7 +448,7 @@ export default function AdminPage() {
 
         <form onSubmit={handleHeroSubmit} className="space-y-8">
           {/* Profile Image Preview */}
-          <div className="flex items-center gap-6">
+          {/* <div className="flex items-center gap-6">
             <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#cce0cf] via-[#e2dec4] to-[#e4d9bc] flex items-center justify-center shadow-inner overflow-hidden shrink-0">
               {heroData.profileImage ? (
                 <img
@@ -476,7 +485,7 @@ export default function AdminPage() {
                 className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200/80 text-sm text-gray-700 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Job Title */}
           <div>
@@ -694,8 +703,18 @@ export default function AdminPage() {
                     onClick={() => removeExperience(index)}
                     className="text-red-300 hover:text-red-500 transition-colors p-1"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
                     </svg>
                   </button>
                 )}
@@ -704,21 +723,33 @@ export default function AdminPage() {
               <div className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">Job Title</label>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">
+                      Job Title
+                    </label>
                     <input
                       type="text"
                       value={item.jobTitle}
-                      onChange={(e) => handleExperienceChange(index, "jobTitle", e.target.value)}
+                      onChange={(e) =>
+                        handleExperienceChange(
+                          index,
+                          "jobTitle",
+                          e.target.value,
+                        )
+                      }
                       required
                       className="w-full px-4 py-3 rounded-xl bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">Company</label>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">
+                      Company
+                    </label>
                     <input
                       type="text"
                       value={item.company}
-                      onChange={(e) => handleExperienceChange(index, "company", e.target.value)}
+                      onChange={(e) =>
+                        handleExperienceChange(index, "company", e.target.value)
+                      }
                       required
                       className="w-full px-4 py-3 rounded-xl bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
                     />
@@ -726,11 +757,15 @@ export default function AdminPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">Period</label>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">
+                    Period
+                  </label>
                   <input
                     type="text"
                     value={item.period}
-                    onChange={(e) => handleExperienceChange(index, "period", e.target.value)}
+                    onChange={(e) =>
+                      handleExperienceChange(index, "period", e.target.value)
+                    }
                     required
                     placeholder="e.g., 2021 — Present"
                     className="w-full px-4 py-3 rounded-xl bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
@@ -738,10 +773,18 @@ export default function AdminPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">Description</label>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">
+                    Description
+                  </label>
                   <textarea
                     value={item.description}
-                    onChange={(e) => handleExperienceChange(index, "description", e.target.value)}
+                    onChange={(e) =>
+                      handleExperienceChange(
+                        index,
+                        "description",
+                        e.target.value,
+                      )
+                    }
                     required
                     rows={3}
                     className="w-full px-4 py-3 rounded-xl bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all resize-none"
@@ -756,8 +799,18 @@ export default function AdminPage() {
             onClick={addExperience}
             className="flex items-center gap-2 text-sm text-[#8eb19d] hover:text-[#6d9b7e] font-medium transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
             </svg>
             Add Job
           </button>
@@ -793,31 +846,43 @@ export default function AdminPage() {
               >
                 <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
                   <div>
-                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Title</label>
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                      Title
+                    </label>
                     <input
                       type="text"
                       value={item.title}
-                      onChange={(e) => handleCertificateChange(index, "title", e.target.value)}
+                      onChange={(e) =>
+                        handleCertificateChange(index, "title", e.target.value)
+                      }
                       required
                       className="w-full px-3 py-2 rounded-lg bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Organization</label>
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                      Organization
+                    </label>
                     <input
                       type="text"
                       value={item.org}
-                      onChange={(e) => handleCertificateChange(index, "org", e.target.value)}
+                      onChange={(e) =>
+                        handleCertificateChange(index, "org", e.target.value)
+                      }
                       required
                       className="w-full px-3 py-2 rounded-lg bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Year</label>
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                      Year
+                    </label>
                     <input
                       type="text"
                       value={item.year}
-                      onChange={(e) => handleCertificateChange(index, "year", e.target.value)}
+                      onChange={(e) =>
+                        handleCertificateChange(index, "year", e.target.value)
+                      }
                       required
                       placeholder="e.g., 2022"
                       className="w-full px-3 py-2 rounded-lg bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
@@ -831,8 +896,18 @@ export default function AdminPage() {
                     onClick={() => removeCertificate(index)}
                     className="text-red-300 hover:text-red-500 transition-colors p-2 mt-4 md:mt-0"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
                     </svg>
                   </button>
                 )}
@@ -845,8 +920,18 @@ export default function AdminPage() {
             onClick={addCertificate}
             className="flex items-center gap-2 text-sm text-[#8eb19d] hover:text-[#6d9b7e] font-medium transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
             </svg>
             Add Certificate
           </button>
