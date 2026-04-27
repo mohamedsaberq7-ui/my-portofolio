@@ -9,6 +9,8 @@ import type {
   CertificateData,
   ExperienceItem,
   CertificateItem,
+  SkillData,
+  SkillItem,
 } from "@/interface";
 
 const defaultHero: HeroData = {
@@ -82,6 +84,21 @@ const defaultCertificate: CertificateData = {
   ],
 };
 
+const defaultSkill: SkillData = {
+  items: [
+    { name: "Soil Analysis", category: "Technical Skills" },
+    { name: "Precision Agriculture", category: "Technical Skills" },
+    { name: "Irrigation Systems", category: "Technical Skills" },
+    { name: "GIS & Remote Sensing", category: "Technical Skills" },
+    { name: "Crop Management", category: "Domain Expertise" },
+    { name: "Pest & Disease Control", category: "Domain Expertise" },
+    { name: "Sustainable Farming", category: "Domain Expertise" },
+    { name: "Data Analysis", category: "Tools & Software" },
+    { name: "AutoCAD", category: "Tools & Software" },
+    { name: "MS Office Suite", category: "Tools & Software" },
+  ],
+};
+
 export default function AdminPage() {
   const [heroData, setHeroData] = useState<HeroData>(defaultHero);
   const [aboutData, setAboutData] = useState<AboutData>(defaultAbout);
@@ -89,11 +106,14 @@ export default function AdminPage() {
     useState<ExperienceData>(defaultExperience);
   const [certificateData, setCertificateData] =
     useState<CertificateData>(defaultCertificate);
+  const [skillData, setSkillData] =
+    useState<SkillData>(defaultSkill);
   const [isLoading, setIsLoading] = useState(true);
   const [isSavingHero, setIsSavingHero] = useState(false);
   const [isSavingAbout, setIsSavingAbout] = useState(false);
   const [isSavingExperience, setIsSavingExperience] = useState(false);
   const [isSavingCertificate, setIsSavingCertificate] = useState(false);
+  const [isSavingSkill, setIsSavingSkill] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
     type: "success" | "error";
@@ -103,11 +123,12 @@ export default function AdminPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [heroRes, aboutRes, expRes, certRes] = await Promise.allSettled([
+        const [heroRes, aboutRes, expRes, certRes, skillRes] = await Promise.allSettled([
           axios.get("/api/hero"),
           axios.get("/api/about"),
           axios.get("/api/experience"),
           axios.get("/api/certificate"),
+          axios.get("/api/skill"),
         ]);
 
         if (heroRes.status === "fulfilled") {
@@ -121,6 +142,9 @@ export default function AdminPage() {
         }
         if (certRes.status === "fulfilled") {
           setCertificateData(certRes.value.data);
+        }
+        if (skillRes.status === "fulfilled") {
+          setSkillData(skillRes.value.data);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -331,6 +355,58 @@ export default function AdminPage() {
       setToast({ message, type: "error" });
     } finally {
       setIsSavingCertificate(false);
+    }
+  };
+
+  // ─── Skill Handlers ───
+  const handleSkillChange = (
+    index: number,
+    field: keyof SkillItem,
+    value: string,
+  ) => {
+    setSkillData((prev) => {
+      const updated = [...prev.items];
+      updated[index] = { ...updated[index], [field]: value };
+      return { ...prev, items: updated };
+    });
+  };
+
+  const addSkill = () => {
+    setSkillData((prev) => ({
+      ...prev,
+      items: [...prev.items, { name: "", category: "" }],
+    }));
+  };
+
+  const removeSkill = (index: number) => {
+    setSkillData((prev) => ({
+      ...prev,
+      items: prev.items.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleSkillSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingSkill(true);
+
+    try {
+      const { data } = await axios.put("/api/skill", {
+        items: skillData.items,
+      });
+
+      setSkillData(data);
+      setToast({
+        message: "Skills saved successfully!",
+        type: "success",
+      });
+    } catch (error) {
+      console.error("Save error:", error);
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.message || "Failed to save"
+        : "Something went wrong";
+      setToast({ message, type: "error" });
+    } finally {
+      setIsSavingSkill(false);
     }
   };
 
@@ -938,6 +1014,114 @@ export default function AdminPage() {
 
           <div className="flex justify-end pt-4 border-t border-gray-200/60">
             <SaveButton isSaving={isSavingCertificate} />
+          </div>
+        </form>
+      </section>
+
+      {/* Divider */}
+      <hr className="border-gray-200/60" />
+
+      {/* ═══════════════════════════════════════════ */}
+      {/* SKILLS SECTION FORM                          */}
+      {/* ═══════════════════════════════════════════ */}
+      <section id="skills" className="scroll-mt-8">
+        <div className="mb-10">
+          <h2 className="text-2xl font-serif text-gray-800 mb-2">
+            Skills
+          </h2>
+          <p className="text-sm text-gray-400">
+            Manage your skills and group them by category.
+          </p>
+        </div>
+
+        <form onSubmit={handleSkillSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 gap-5">
+            {skillData.items.map((item, index) => (
+              <div
+                key={index}
+                className="p-5 bg-white rounded-2xl border border-gray-200/80 shadow-sm relative flex flex-col md:flex-row gap-4 items-start md:items-center"
+              >
+                <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                  <div>
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                      Skill Name
+                    </label>
+                    <input
+                      type="text"
+                      value={item.name}
+                      onChange={(e) =>
+                        handleSkillChange(index, "name", e.target.value)
+                      }
+                      required
+                      placeholder="e.g., Soil Analysis"
+                      className="w-full px-3 py-2 rounded-lg bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                      Category
+                    </label>
+                    <input
+                      type="text"
+                      value={item.category}
+                      onChange={(e) =>
+                        handleSkillChange(index, "category", e.target.value)
+                      }
+                      required
+                      placeholder="e.g., Technical Skills"
+                      className="w-full px-3 py-2 rounded-lg bg-[#f5f3eb]/30 border border-gray-200/80 text-sm focus:ring-[#8eb19d]/30 focus:border-[#8eb19d] transition-all"
+                    />
+                  </div>
+                </div>
+
+                {skillData.items.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeSkill(index)}
+                    className="text-red-300 hover:text-red-500 transition-colors p-2 mt-4 md:mt-0"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={addSkill}
+            className="flex items-center gap-2 text-sm text-[#8eb19d] hover:text-[#6d9b7e] font-medium transition-colors"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            Add Skill
+          </button>
+
+          <div className="flex justify-end pt-4 border-t border-gray-200/60">
+            <SaveButton isSaving={isSavingSkill} />
           </div>
         </form>
       </section>

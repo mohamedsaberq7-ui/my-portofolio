@@ -23,6 +23,7 @@ export default function Navbar() {
   const navItems: NavItemProps[] = [
     { name: "About", href: "#about" },
     { name: "Experience", href: "#experience" },
+    { name: "Skills", href: "#skills" },
     { name: "Certifications", href: "#certifications" },
     { name: "Contact", href: "#contact" },
   ];

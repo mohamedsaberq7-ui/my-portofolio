@@ -42,3 +42,12 @@ export interface CertificateData {
   items: CertificateItem[];
 }
 
+export interface SkillItem {
+  name: string;
+  category: string;
+}
+
+export interface SkillData {
+  _id?: string;
+  items: SkillItem[];
+}

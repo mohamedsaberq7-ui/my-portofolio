@@ -3,6 +3,7 @@ import CertificateSection from "@/components/sections/CertificateSection";
 import ContactSection from "@/components/sections/ContactSection";
 import ExprianceSection from "@/components/sections/ExprianceSection";
 import HeroScreen from "@/components/sections/HeroSection";
+import SkillsSection from "@/components/sections/SkillsSection";
 
 export default async function Home() {
   return (
@@ -10,6 +11,7 @@ export default async function Home() {
       <HeroScreen />
       <AboutSection />
       <ExprianceSection />
+      <SkillsSection />
       <CertificateSection />
       <ContactSection />
     </>
