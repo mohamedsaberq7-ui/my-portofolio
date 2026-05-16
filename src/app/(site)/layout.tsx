@@ -1,6 +1,8 @@
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 
+export const revalidate = 3600;
+
 export default function SiteLayout({
   children,
 }: {
