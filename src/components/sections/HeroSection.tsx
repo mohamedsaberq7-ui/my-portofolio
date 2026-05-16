@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import Hero from "@/models/Hero";
 import type { HeroData } from "@/interface";
-import profileImage from "../../../public/images/IMG_20260413_143831.jpg";
+import profileImage from "../../../public/images/IMG_20260413_143831.jpeg";
 import Image from "next/image";
 
 const defaultHero: HeroData = {
